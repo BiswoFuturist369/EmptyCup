@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel - Interior Designers</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    h1 {
+      margin-bottom: 1rem;
+    }
+    form {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    input, button, textarea {
+      margin-bottom: 0.75rem;
+      padding: 8px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+    }
+    .designer {
+      background: white;
+      margin-bottom: 1rem;
+      padding: 10px;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    .designer-header {
+      display: flex;
+      justify-content: space-between;
+    }
+    .actions button {
+      width: auto;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Admin Panel</h1>
+  <form id="designerForm">
+    <input type="text" placeholder="Name" id="name" required />
+    <input type="number" placeholder="Stars (1-5)" id="stars" min="1" max="5" required />
+    <textarea placeholder="Description" id="description" required></textarea>
+    <input type="number" placeholder="Projects" id="projects" required />
+    <input type="number" placeholder="Years of Experience" id="years" required />
+    <input type="text" placeholder="Price ($/$$/$$$)" id="price" required />
+    <input type="text" placeholder="Phone 1" id="phone1" required />
+    <input type="text" placeholder="Phone 2" id="phone2" required />
+    <button type="submit">Add Designer</button>
+  </form>
+
+  <div id="designers"></div>
+
+  <script>
+    const form = document.getElementById('designerForm');
+    const list = document.getElementById('designers');
+
+    async function fetchDesigners() {
+      const res = await fetch('/api/designers');
+      const data = await res.json();
+      list.innerHTML = '';
+      data.forEach(d => {
+        const div = document.createElement('div');
+        div.className = 'designer';
+        div.innerHTML = `
+          <div class="designer-header">
+            <strong>${d.name}</strong> <span>${d.stars}★</span>
+          </div>
+          <p>${d.description}</p>
+          <p>📦 ${d.projects} projects | 🕒 ${d.years} yrs | 💰 ${d.price}</p>
+          <p>📞 ${d.phone1} / ${d.phone2}</p>
+          <div class="actions">
+            <button onclick="editDesigner(${d.id})">Edit</button>
+            <button onclick="deleteDesigner(${d.id})">Delete</button>
+          </div>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const designer = {
+        name: form.name.value,
+        stars: parseInt(form.stars.value),
+        description: form.description.value,
+        projects: parseInt(form.projects.value),
+        years: parseInt(form.years.value),
+        price: form.price.value,
+        phone1: form.phone1.value,
+        phone2: form.phone2.value
+      };
+
+      await fetch('/api/designers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(designer)
+      });
+      form.reset();
+      fetchDesigners();
+    });
+
+    async function deleteDesigner(id) {
+      await fetch(`/api/designers/${id}`, { method: 'DELETE' });
+      fetchDesigners();
+    }
+
+    function editDesigner(id) {
+      alert('In a real app, this would open a modal pre-filled with data for editing. Implementing soon.');
+    }
+
+    fetchDesigners();
+  </script>
+</body>
+</html>

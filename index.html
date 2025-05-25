@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interior Designers EmptyCup</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="main.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>EmptyCup</h1>
+    <div class="menu">
+      <i class="fa-solid fa-ellipsis-vertical"></i>
+    </div>
+  </header>
+
+  <nav class="nav-tabs">
+    <button class="tab active"><i class="fa-solid fa-address-book"></i><span>Contacts</span></button>
+    <button class="tab"><i class="fa-solid fa-image"></i><span>Gallery</span></button>
+    <button class="tab"><i class="fa-solid fa-location-dot"></i><span>Map</span></button>
+    <button id="shortlistFilter" class="tab"><i class="fa-regular fa-heart"></i><span>Shortlisted</span></button>
+    <button class="tab"><i class="fa-solid fa-sort"></i><span>Sort</span></button>
+  </nav>
+
+  <main id="listings"></main>
+
+  <template id="card-template">
+    <article class="card">
+      <div class="card-body">
+        <h2 class="studio-name">Studio Name</h2>
+        <div class="stars">★★★★★</div>
+        <p class="desc">Passionate team of designers...</p>
+        <div class="stats">
+          <div><strong class="projects">0</strong><span>Projects</span></div>
+          <div><strong class="years">0</strong><span>Years</span></div>
+          <div><strong class="price">$</strong><span>Price</span></div>
+        </div>
+        <div class="phones">
+          <p class="phone1">+91-0000000000</p>
+          <p class="phone2">+91-0000000000</p>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="action-btn details"><i class="fa-solid fa-arrow-right"></i><span>Details</span></button>
+        <button class="action-btn hide"><i class="fa-solid fa-eye-slash"></i><span>Hide</span></button>
+        <button class="action-btn shortlist"><i class="fa-regular fa-heart"></i><span>Shortlist</span></button>
+        <button class="action-btn call"><i class="fa-solid fa-phone"></i><span>Call</span></button>
+        <button class="action-btn report"><i class="fa-regular fa-flag"></i><span>Report</span></button>
+      </div>
+    </article>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
